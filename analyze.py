@@ -3,14 +3,12 @@
 from utils import get_gmgn_trending, check_rug_score, get_twitter_sentiment
 
 def analyze_market():
-    trending = get_gmgn_trending()
-    filtered = []
+    token_address = "EXAMPLE_SOLANA_TOKEN"  # soon from GMGN or Twitter
 
-    for token in trending:
-        safety = check_rug_score(token["address"])
-        sentiment = get_twitter_sentiment(token["name"])
+    safety = check_token_safety(token_address)
 
-        if safety == "safe" and sentiment > 0.6:
-            filtered.append(token)
+    if safety is None or safety["honeypot"] or not safety["liquidity_locked"] or safety["score"] < 70:
+        return None
 
-    return filtered
+    return token_address
+
