@@ -3,7 +3,7 @@
 from utils import get_gmgn_trending, check_rug_score, get_twitter_sentiment
 
 def analyze_market():
-    token_address = "EXAMPLE_SOLANA_TOKEN"  # soon from GMGN or Twitter
+    token_address = "So11111111111111111111111111111111111111112"  # soon from GMGN or Twitter
 
     safety = check_token_safety(token_address)
 
