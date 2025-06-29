@@ -46,3 +46,29 @@ def check_token_safety(token_address):
     except Exception as e:
         print(f"⚠️ RugCheck error: {e}")
         return None
+from utils import check_token_safety
+
+def analyze_market():
+    # Replace this with real token grabbing logic (from GMGN etc)
+    token_address = "EXAMPLE_SOLANA_TOKEN"
+
+    safety = check_token_safety(token_address)
+
+    if safety is None:
+        print("⚠️ Couldn’t get rugcheck data.")
+        return None
+
+    if safety["honeypot"]:
+        print("❌ Token is a honeypot. Skipping.")
+        return None
+
+    if not safety["liquidity_locked"]:
+        print("❌ Liquidity not locked. Skipping.")
+        return None
+
+    if safety["score"] < 70:  # up to you how strict
+        print(f"❌ RugCheck score too low ({safety['score']}/100). Skipping.")
+        return None
+
+    print("✅ Passed RugCheck filters.")
+    return token_address
