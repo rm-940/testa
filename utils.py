@@ -23,3 +23,26 @@ def execute_trade(token_address, private_key):
 def should_sell(position):
     # Simulated logic (replace with real price check)
     return False
+import requests
+
+def check_token_safety(token_address):
+    try:
+        url = f"https://api.rugcheck.xyz/v1/tokens/{token_address}"
+        response = requests.get(url)
+        data = response.json()
+
+        if not data.get("success", False):
+            print("❌ RugCheck API failed.")
+            return None
+
+        result = data["data"]
+        return {
+            "honeypot": result.get("is_honeypot"),
+            "liquidity_locked": result.get("liquidity_locked"),
+            "owner_renounced": result.get("owner_renounced"),
+            "score": result.get("score")
+        }
+
+    except Exception as e:
+        print(f"⚠️ RugCheck error: {e}")
+        return None
