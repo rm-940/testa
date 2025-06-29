@@ -23,3 +23,7 @@ def execute_strategy(market_data):
         if should_sell(position):
             # Sell logic here
             open_positions.remove(position)
+
+def execute_strategy(token_address):
+    print(f"🚀 Ready to snipe token: {token_address}")
+    # insert buy logic here (e.g. via Jupiter)
